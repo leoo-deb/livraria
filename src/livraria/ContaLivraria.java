@@ -1,8 +1,7 @@
 package livraria;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.text.CollationElementIterator;
+import java.util.*;
 
 public class ContaLivraria {
     private Scanner sc = new Scanner(System.in);
@@ -16,7 +15,7 @@ public class ContaLivraria {
 
     public boolean access() {
         System.out.println("---------------------");
-        System.out.print("CPF ou UUID: ");
+        System.out.print("CPF ou Serial: ");
         String cpf = sc.nextLine();
 
         System.out.print("Senha: ");
@@ -52,8 +51,13 @@ public class ContaLivraria {
 
            loop:
            while (true) {
-               System.out.print("Insira um CPF: ");
+               System.out.print("Insira um CPF (Somente numeros): ");
                cpf = sc.nextLine();
+
+               if (!cpf.matches("^\\d{3}\\d{3}\\d{3}\\d{2}$")) {
+                   System.out.println("ERROR: Este CPF esta invalido. Verifico-o novamente.");
+                   continue;
+               }
 
                for (Funcionario verificar: funcionarios) {
                    if (cpf.equals(verificar.getCpf())) {
@@ -61,11 +65,7 @@ public class ContaLivraria {
                        continue loop;
                    }
                }
-               if (!cpf.matches("^\\d{3}(.)\\d{3}(.)\\d{3}(-)\\d{2}$")) {
-                   System.out.println("ERROR: O CPF esta incorreto. Deve conter as pontuacoes (.) e (-).");
-               } else {
-                   break;
-               }
+               break;
            }
 
            while (true) {
@@ -75,9 +75,9 @@ public class ContaLivraria {
 
                if (!senha.matches("^[a-zA-Z\\d]{4,}$")) {
                    System.out.println("ERROR: A senha deve conter no minimo 4 caracteres.");
-               } else {
-                   break;
+                   continue;
                }
+               break;
            }
 
            while (true) {
@@ -87,9 +87,9 @@ public class ContaLivraria {
 
                if (!confirmar.equals(senha)) {
                    System.out.println("ERROR: A senha deve estar de acordo com a criada.");
-               } else {
-                   break;
+                   continue;
                }
+               break;
            }
 
            Funcionario create = new Funcionario(cpf, senha, name);
@@ -107,12 +107,14 @@ public class ContaLivraria {
 
     public void logAcesso() {
         if (!logAcesso.isEmpty()) {
+            Collections.sort(logAcesso);
             do {
                 System.out.println("---------------------");
                 System.out.println("Historico de acessos:");
                 for (Funcionario log : logAcesso) {
-                    System.out.printf("Nome: %s\t | \tAcesso UUID: %s\n", log.getNome(), log.getId().toString());
+                    System.out.printf("Nome: %s\t | \tSerial: %s\n", log.getNome(), log.getId().toString());
                 }
+                System.out.println("---------------------");
 
                 System.out.print("Pressione a tecla (ENTER) para voltar ao inicio.");
                 op = sc.nextLine();
