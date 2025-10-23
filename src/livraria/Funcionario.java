@@ -4,15 +4,16 @@ import java.util.UUID;
 
 public class Funcionario implements Comparable<Funcionario> {
     private String nome;
-    private final String cpf;
+    private final String CPF;
     private String password;
-    private final UUID serial;
+
+    private final UUID SERIAL_USER;
     private final Integer ID_USER;
     private static int numberID = 1;
 
     public Funcionario(String cpf, String password, String nome) {
-        this.serial = UUID.randomUUID();
-        this.cpf = cpf;
+        this.SERIAL_USER = UUID.randomUUID();
+        this.CPF = cpf;
         this.password = password;
         this.nome = nome;
         this.ID_USER = numberID++;
@@ -23,7 +24,7 @@ public class Funcionario implements Comparable<Funcionario> {
     }
 
     public String getCpf() {
-        return cpf;
+        return CPF;
     }
 
     public String getPassword() {
@@ -31,7 +32,7 @@ public class Funcionario implements Comparable<Funcionario> {
     }
 
     public UUID getId() {
-        return serial;
+        return SERIAL_USER;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Funcionario implements Comparable<Funcionario> {
         return String.format("""
                 Nome: %s
                 CPF: %s
-                Serial: %s""", nome, cpf, serial.toString());
+                Serial: %s""", nome, CPF, SERIAL_USER.toString());
     }
 
     @Override

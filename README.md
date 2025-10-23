@@ -14,7 +14,7 @@ para funcionários que gerenciam o estoque.
 - Adicionar Livro: Permite ao funcionario inserir um novo livro.
 - Listar Livros: Exibe todos os livros criados.
 - Modificar Livro: Permite editar o nome, a sinopse e o autor de um livro já existente.
-- Remover Livro: Exclui um lviro específico.
+- Remover Livro: Exclui um livro específico.
 
 
 ## 📫 Contribuindo
