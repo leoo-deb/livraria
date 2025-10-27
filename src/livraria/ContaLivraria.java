@@ -13,6 +13,7 @@ public class ContaLivraria {
         funcionarios.add(new Funcionario("1", "1234", "admin"));
     }
 
+    //ACESSA A CONTA
     public boolean access() {
         System.out.println("---------------------");
         System.out.print("CPF ou Serial: ");
@@ -34,6 +35,7 @@ public class ContaLivraria {
         return true;
     }
 
+    //CRIA UMA CONTA
     public void create() {
        String name, cpf, senha;
        do {
@@ -116,9 +118,9 @@ public class ContaLivraria {
                 }
                 System.out.println("---------------------");
 
-                System.out.print("Pressione a tecla (ENTER) para voltar ao inicio.");
-                op = sc.nextLine();
-            } while (!op.isBlank());
+                    System.out.print("Pressione a tecla (ENTER) para voltar ao inicio.");
+                    op = sc.nextLine();
+                } while (!op.isBlank());
         } else {
             throw new NoSuchElementException("Ainda nao existe nenhum acesso a livravria.");
         }

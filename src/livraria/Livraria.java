@@ -11,19 +11,48 @@ public class Livraria {
     private ArrayList<Livro> livros = new ArrayList<>();
 
     public void addLivro() {
+        String titulo, sinopse, autor;
         do {
             while (true) {
                 System.out.println("---------------------");
-                System.out.print("Digite o titulo do livro: ");
-                String titulo = sc.nextLine().toUpperCase();
 
-                System.out.print("Digite a sinopse do livro: ");
-                String sinopse = sc.nextLine();
+                while (true) {
+                    System.out.print("Digite o titulo do livro: ");
+                    titulo = sc.nextLine().toUpperCase();
 
-                System.out.print("Digite o autor(a) do livro: ");
-                String autor = sc.nextLine().toUpperCase();
+                    if (titulo.matches("^[a-zA-Z\\d\\s]{1,40}$")) {
+                        for (Livro verificarTitulo : livros) {
+                            if (titulo.equals(verificarTitulo.getTitulo())) {
+                                System.out.println("ERROR: Ja possui um livro com este titulo.");
+                                return;
+                            }
+                        }
+                        break;
+                    }
+                    System.out.println("ERROR: Titulo invalido.");
+                }
 
-                if (!(titulo.isEmpty() | sinopse.isEmpty() | autor.isEmpty())) {
+                while (true) {
+                    System.out.print("Digite a sinopse do livro: ");
+                    sinopse = sc.nextLine();
+
+                    if (sinopse.matches("^[a-zA-Z\\d\\s]{3,}$")) {
+                        break;
+                    }
+                    System.out.println("ERROR: Sinopse invalida.");
+                }
+
+                while (true) {
+                    System.out.print("Digite o autor(a) do livro: ");
+                    autor = sc.nextLine().toUpperCase();
+
+                    if (autor.matches("^[a-zA-Z\\s]{4,50}$")) {
+                        break;
+                    }
+                    System.out.println("ERROR: Nome de autor invalido.");
+                }
+
+                if (!(titulo.isEmpty() || sinopse.isEmpty() || autor.isEmpty())) {
                     livros.add(new Livro(titulo.toUpperCase(), sinopse, autor.toUpperCase()));
                     System.out.println("SUCCESS: Livro adicionado com sucesso!");
                     System.out.println("---------------------");
@@ -131,13 +160,12 @@ public class Livraria {
 
                     if (resul.isEmpty()) {
                         throw new NoSuchElementException("Nehnhum livro encontrado.");
-                    } else {
-                        System.out.println("Livro(s) encontrado(s): " + resul.size());
-                        for (Livro resulLivro: resul) {
-                            System.out.format("-------LIVRO %d-------\n", (livros.indexOf(resulLivro) + 1));
-                            System.out.println(resulLivro);
-                            System.out.println("---------------------");
-                        }
+                    }
+                    System.out.println("Livro(s) encontrado(s): " + resul.size());
+                    for (Livro resulLivro: resul) {
+                        System.out.format("-------LIVRO %d-------\n", (livros.indexOf(resulLivro) + 1));
+                        System.out.println(resulLivro);
+                        System.out.println("---------------------");
                     }
                 }
 
