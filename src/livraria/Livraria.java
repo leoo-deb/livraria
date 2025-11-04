@@ -13,55 +13,50 @@ public class Livraria {
     public void addLivro() {
         String titulo, sinopse, autor;
         do {
+            System.out.println("---------------------");
+
             while (true) {
-                System.out.println("---------------------");
+                System.out.print("Digite o titulo do livro: ");
+                titulo = sc.nextLine().toUpperCase();
 
-                while (true) {
-                    System.out.print("Digite o titulo do livro: ");
-                    titulo = sc.nextLine().toUpperCase();
-
-                    if (titulo.matches("^[a-zA-Z\\d\\s]{1,40}$")) {
-                        for (Livro verificarTitulo : livros) {
-                            if (titulo.equals(verificarTitulo.getTitulo())) {
-                                System.out.println("ERROR: Ja possui um livro com este titulo.");
-                                return;
-                            }
+                if (titulo.matches("^[a-zA-Z\\d\\s]{1,40}$")) {
+                    for (Livro verificarTitulo : livros) {
+                        if (titulo.equals(verificarTitulo.getTitulo())) {
+                            System.out.println("ERROR: Ja possui um livro com este titulo.");
+                            return;
                         }
-                        break;
                     }
-                    System.out.println("ERROR: Titulo invalido.");
-                }
-
-                while (true) {
-                    System.out.print("Digite a sinopse do livro: ");
-                    sinopse = sc.nextLine();
-
-                    if (sinopse.matches("^[a-zA-Z\\d\\s]{3,}$")) {
-                        break;
-                    }
-                    System.out.println("ERROR: Sinopse invalida.");
-                }
-
-                while (true) {
-                    System.out.print("Digite o autor(a) do livro: ");
-                    autor = sc.nextLine().toUpperCase();
-
-                    if (autor.matches("^[a-zA-Z\\s]{4,50}$")) {
-                        break;
-                    }
-                    System.out.println("ERROR: Nome de autor invalido.");
-                }
-
-                if (!(titulo.isEmpty() || sinopse.isEmpty() || autor.isEmpty())) {
-                    livros.add(new Livro(titulo.toUpperCase(), sinopse, autor.toUpperCase()));
-                    System.out.println("SUCCESS: Livro adicionado com sucesso!");
-                    System.out.println("---------------------");
                     break;
                 }
-
-                System.out.println("---------------------");
-                System.out.println("ERROR: Verififique se todos os campos foram preenchidos.");
+                System.out.println("ERROR: Titulo invalido.");
             }
+
+            while (true) {
+                System.out.print("Digite a sinopse do livro: ");
+                sinopse = sc.nextLine();
+
+                if (sinopse.matches("^[a-zA-Z\\d\\s]{3,}$")) {
+                    break;
+                }
+                System.out.println("ERROR: Sinopse invalida.");
+            }
+
+            while (true) {
+                System.out.print("Digite o autor(a) do livro: ");
+                autor = sc.nextLine().toUpperCase();
+
+                if (autor.matches("^[a-zA-Z\\s(-,|)?]{4,50}$")) {
+                    break;
+                }
+                System.out.println("ERROR: Nome de autor invalido.");
+            }
+
+            Livro newLivro = new Livro(titulo.toUpperCase(), sinopse, autor.toUpperCase());
+            System.out.println("SUCCESS: Livro adicionado com sucesso!");
+            System.out.println("---------------------");
+            System.out.println(newLivro);
+            System.out.println("---------------------");
+            livros.add(newLivro);
 
             System.out.print("Pressione a tecla (ENTER) para voltar ao inicio.");
             op = sc.nextLine();
