@@ -1,20 +1,28 @@
 package livraria;
 
-import java.text.CollationElementIterator;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
-public class ContaLivraria {
-    private Scanner sc = new Scanner(System.in);
+public class ContaLivraria {;
     private ArrayList<Funcionario> funcionarios = new ArrayList<>();
-    private ArrayList<Funcionario> logAcesso = new ArrayList<>();
+    private ArrayList<String> logAcesso = new ArrayList<>();
+    private Scanner sc = new Scanner(System.in);
     private String op;
 
+    //INICIA O SISTEMA COM UMA CONTA PRE CRIADA: ADMIN
     public ContaLivraria() {
-        funcionarios.add(new Funcionario("1", "1234", "admin"));
+        funcionarios.add(new Funcionario("1", "1", "admin"));
     }
 
     //ACESSA A CONTA
     public boolean access() {
+        var logDataTime = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
+        String logFormatter = logDataTime.format(DateTimeFormatter.ofPattern("HH:mm:ss - dd/MM/yyyy"));
+
         System.out.println("---------------------");
         System.out.print("CPF ou Serial: ");
         String cpf = sc.nextLine();
@@ -24,10 +32,9 @@ public class ContaLivraria {
         System.out.println("---------------------");
 
         for (Funcionario acesso: funcionarios) {
-            if ((cpf.equals(acesso.getCpf()) && senha.equals(acesso.getPassword()))
-                    || (cpf.equals(acesso.getId().toString()) && senha.equals(acesso.getPassword()))) {
+            if (((cpf.equals(acesso.getCpf()) || cpf.equals(acesso.getId().toString())) && senha.equals(acesso.getPassword()))) {
                 System.out.printf("SUCCESS: Login efetuado com sucesso! Bem-vindo %s.\n", acesso.getNome());
-                logAcesso.add(acesso);
+                logAcesso.add(String.format("Nome: %-10s | \t\tSerial: %s (%s)", acesso.getNome(), acesso.getId().toString(),logFormatter));
                 return false;
             }
         }
@@ -109,20 +116,19 @@ public class ContaLivraria {
 
     public void logAcesso() {
         if (!logAcesso.isEmpty()) {
-            Collections.sort(logAcesso);
             do {
                 System.out.println("---------------------");
                 System.out.println("Historico de acessos:");
-                for (Funcionario log : logAcesso) {
-                    System.out.printf("Nome: %s\t | \tSerial: %s\n", log.getNome(), log.getId().toString());
+                for (int i = logAcesso.size(); i >= 1; i--) {
+                    System.out.println(logAcesso.get(i - 1));
                 }
                 System.out.println("---------------------");
 
-                    System.out.print("Pressione a tecla (ENTER) para voltar ao inicio.");
-                    op = sc.nextLine();
+                System.out.print("Pressione a tecla (ENTER) para voltar ao inicio.");
+                op = sc.nextLine();
                 } while (!op.isBlank());
         } else {
-            throw new NoSuchElementException("Ainda nao existe nenhum acesso a livravria.");
+            throw new NoSuchElementException("Ainda nao existe nenhum acesso a livraria.");
         }
     }
 }

@@ -113,7 +113,6 @@ public class Livraria {
                 if (op2 == 2) {
                     viewIndex();
                     System.out.printf("""
-                            ---------------------
                             Selecione qual livro sera removido
                             (OBS: Digite apenas o numero/index listado acima):""");
                     int index = sc.nextInt();
@@ -161,6 +160,7 @@ public class Livraria {
                     if (resul.isEmpty()) {
                         throw new NoSuchElementException("Nehnhum livro encontrado.");
                     }
+
                     System.out.println("Livro(s) encontrado(s): " + resul.size());
                     for (Livro resulLivro: resul) {
                         System.out.format("-------LIVRO %d-------\n", (livros.indexOf(resulLivro) + 1));
@@ -182,13 +182,13 @@ public class Livraria {
 
                     if (resul.isEmpty()) {
                         throw new NoSuchElementException("Nehnhum livro encontrado.");
-                    } else {
-                        System.out.println("Livro(s) encontrado(s): " + resul.size());
-                        for (Livro resulLivro: resul) {
-                            System.out.format("-------LIVRO %d-------\n", (livros.indexOf(resulLivro) + 1));
-                            System.out.println(resulLivro);
-                            System.out.println("---------------------");
-                        }
+                    }
+
+                    System.out.println("Livro(s) encontrado(s): " + resul.size());
+                    for (Livro resulLivro: resul) {
+                        System.out.format("-------LIVRO %d-------\n", (livros.indexOf(resulLivro) + 1));
+                        System.out.println(resulLivro);
+                        System.out.println("---------------------");
                     }
                 }
                 System.out.print("Deseja fazer uma nova busca? [S/N].");

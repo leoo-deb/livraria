@@ -1,9 +1,9 @@
 package livraria;
 
 public class Livro {
-    private String titulo;
-    private String sinopse;
-    private String autor;
+    private final String titulo;
+    private final String sinopse;
+    private final String autor;
 
     public Livro(String titulo, String sinopse, String autor) {
         this.titulo = titulo;
