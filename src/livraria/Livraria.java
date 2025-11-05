@@ -14,7 +14,6 @@ public class Livraria {
         String titulo, sinopse, autor;
         do {
             System.out.println("---------------------");
-
             while (true) {
                 System.out.print("Digite o titulo do livro: ");
                 titulo = sc.nextLine().toUpperCase();

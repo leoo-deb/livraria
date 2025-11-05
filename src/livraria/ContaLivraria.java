@@ -1,5 +1,7 @@
 package livraria;
 
+import exceptions.CredentialAuthenticationException;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +21,7 @@ public class ContaLivraria {;
     }
 
     //ACESSA A CONTA
-    public boolean access() {
+    public void access() {
         var logDataTime = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
         String logFormatter = logDataTime.format(DateTimeFormatter.ofPattern("HH:mm:ss - dd/MM/yyyy"));
 
@@ -35,11 +37,11 @@ public class ContaLivraria {;
             if (((cpf.equals(acesso.getCpf()) || cpf.equals(acesso.getId().toString())) && senha.equals(acesso.getPassword()))) {
                 System.out.printf("SUCCESS: Login efetuado com sucesso! Bem-vindo %s.\n", acesso.getNome());
                 logAcesso.add(String.format("Nome: %-10s | \t\tSerial: %s (%s)", acesso.getNome(), acesso.getId().toString(),logFormatter));
-                return false;
+                return;
             }
         }
-        System.out.println("CPF/Senha incorreto. Verifique-os novamente.");
-        return true;
+
+        throw new CredentialAuthenticationException("CPF/Senha incorreto. Verifique-os novamente.");
     }
 
     //CRIA UMA CONTA

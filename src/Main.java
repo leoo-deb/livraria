@@ -21,10 +21,11 @@ public class Main {
             op2 = sc.nextInt();
             sc.nextLine();
 
-            switch (op2) {
-                case 1:
-                    if (conta.access()) {
-                        break;
+                if (op2 == 1) {
+                    try {
+                        conta.access();
+                    } catch (CredentialAuthenticationException e) {
+                        System.out.println("ERROR: " + e.getMessage());
                     }
 
                     do {
@@ -60,13 +61,13 @@ public class Main {
                             }
                         }
                     } while (op != 5);
-                    break;
+                }
 
-                case 2:
+                if (op2 == 2) {
                     conta.create();
-                    break;
+                }
 
-                case 3:
+                if (op2 == 3) {
                     try {
                         conta.logAcesso();
                     } catch (NoSuchElementException e) {
